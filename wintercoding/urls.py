@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include,url
+admin.site.site_header = "TODO_LIST 관리"
+admin.site.site_title = "TODO_LIST Admin Portal"
+admin.site.index_title = "Welcome to TODO_LIST Researcher Portal"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(r'admin/', admin.site.urls),
+    path(r'',include('todo.urls')),
 ]
