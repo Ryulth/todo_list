@@ -91,18 +91,16 @@
 	                        <li class="dropdown">
 	                            <a href="#notifications" class="dropdown-toggle btn-rotate" data-toggle="dropdown">
 	                                <i class="ti-bell"></i>
-	                                <span class="notification">5</span>
+	                                <span class="notification">{{notify_list|length}}</span>
 									<p class="hidden-md hidden-lg">
 										Notifications
 										<b class="caret"></b>
 									</p>
 	                            </a>
 	                            <ul class="dropdown-menu">
-	                                <li><a href="#not1">Notification 1</a></li>
-	                                <li><a href="#not2">Notification 2</a></li>
-	                                <li><a href="#not3">Notification 3</a></li>
-	                                <li><a href="#not4">Notification 4</a></li>
-	                                <li><a href="#another">Another notification</a></li>
+									{% for notify in notify_list%}
+	                                <li><a href="#not1">{{notify.finish_date|date:'m월 d일'|default:'ㅡ'}} : {{notify.title}}</a></li>
+									{% endfor %}
 	                            </ul>
 	                        </li>
 							<li>
@@ -125,8 +123,8 @@
 
 								<div class="card-header">
 									<ul class="nav nav-tabs card-header-tabs" role="tablist">
-										<li class="nav-item  ">
-											<a class="nav-link active " id="todo-tab" data-toggle="tab"href="#todo"  role="tab" aria-controls="todo" aria-selected="true">TODO</a>
+										<li class="nav-item  active">
+											<a class="nav-link  " id="todo-tab" data-toggle="tab"href="#todo"  role="tab" aria-controls="todo" aria-selected="true">TODO</a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" id="late-tab" data-toggle="tab" href="#late" role="tab" aria-controls="late"  aria-selected="false">LATE</a>
@@ -143,29 +141,24 @@
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
 											</div>
-											<table class="bootstrap-table" class="table ">
+											<table class="bootstrap-table" class="table">
 												<thead >
 												<th data-field="state" data-checkbox="true"></th>
-												<th data-field="crdate" data-sortable="true" >등록</th>
-												<th data-field="date" data-sortable="true" >기한</th>
-												<th data-field="title" data-sortable="true" >제목</th>
-												<th data-field="content" data-sortable="true" >내용</th>
-												<th data-field="type" data-sortable="true" >종류</th>
-												<th data-field="success" data-sortable="true">성공</th>
-												<th data-field="edit"  >편집</th>
-												<th data-field="delete" >삭제</th>
-
-
+												<th class="col-xs-3 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
+												<th class="col-xs-3 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
+												<th class="col-xs-8 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >편집</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="delete" >삭제</th>
 												</thead>
-
 												<tbody>
 												{% for todo in todo_list %}
 												<tr>
 													<td></td>
-													<td>{{todo.create_date|date:'y년 m월 d일 h시:m분'}}</td>
-													<td>{{todo.finish_date|date:'y년 m월 d일 h시:m분'}}</td>
-													<td>{{todo.title}}</td>
-													<td>{{todo.content}}</td>
+													<td>{{todo.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
+													<td class="text-left">{{todo.title}}</td>
+													<td class="text-left">{{todo.content}}</td>
 													<td>
 														{% if todo.type == 0 %}
 														<a   href="/todo_type/{{todo.id}}/" class="btn btn-simple btn-info btn-icon" >일반</a>
@@ -190,30 +183,29 @@
 												</tbody>
 											</table>
 										</div>
+
 										<div class="tab-pane fade" id="late" role="tabpanel" aria-labelledby="late-tab">
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
 											</div>
 											<table class="bootstrap-table" class="table ">
-												<thead >
+												<thead>
 												<th data-field="state" data-checkbox="true"></th>
-												<th data-field="crdate" data-sortable="true" >등록</th>
-												<th data-field="date" data-sortable="true" >기한</th>
-												<th data-field="title" data-sortable="true" >제목</th>
-												<th data-field="content" data-sortable="true" >내용</th>
-												<th data-field="type" data-sortable="true" >종류</th>
-												<th data-field="success" data-sortable="true">성공</th>
-												<th data-field="edit"  >편집</th>
-												<th data-field="delete" >삭제</th>
+												<th class="col-xs-3 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
+												<th class="col-xs-3 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
+												<th class="col-xs-8 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >편집</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="delete" >삭제</th>
 												</thead>
 												<tbody>
 												{% for late in late_list %}
 												<tr>
 													<td></td>
-													<td>{{late.create_date|date:'y년 m월 d일 h시:m분'}}</td>
-													<td>{{late.finish_date|date:'y년 m월 d일 h시:m분'}}</td>
-													<td>{{late.title}}</td>
-													<td>{{late.content}}</td>
+													<td>{{late.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
+													<td class="text-left">{{late.title}}</td>
+													<td class="text-left">{{late.content}}</td>
 													<td>
 														{% if late.type == 0 %}
 														<a   href="/todo_type/{{late.id}}/" class="btn btn-simple btn-info btn-icon" >일반</a>
@@ -236,6 +228,7 @@
 												</tbody>
 											</table>
 										</div>
+
 										<div class="tab-pane fade" id="trash" role="tabpanel" aria-labelledby="trash-tab">
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
@@ -243,41 +236,36 @@
 											<table class="bootstrap-table" class="table ">
 												<thead >
 												<th data-field="state" data-checkbox="true"></th>
-												<th data-field="crdate" data-sortable="true" >등록</th>
-												<th data-field="date" data-sortable="true" >기한</th>
-												<th data-field="title" data-sortable="true" >제목</th>
-												<th data-field="content" data-sortable="true" >내용</th>
-												<th data-field="type" data-sortable="true" >종류</th>
-												<th data-field="success" data-sortable="true">성공</th>
-												<th data-field="edit"  >편집</th>
-												<th data-field="delete" >삭제</th>
-
-
+												<th class="col-xs-3 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
+												<th class="col-xs-3 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
+												<th class="col-xs-8 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >복원</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="delete" >삭제</th>
 												</thead>
-
 												<tbody>
 												{% for trash in trash_list %}
 												<tr>
 													<td></td>
-													<td>{{trash.create_date|date:'y년 m월 d일 h시:m분'}}</td>
-													<td>{{trash.finish_date|date:'y년 m월 d일 h시:m분'}}</td>
-													<td>{{trash.title}}</td>
-													<td>{{trash.content}}</td>
+													<td>{{trash.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
+													<td class="text-left">{{trash.title}}</td>
+													<td class="text-left">{{trash.content}}</td>
 													<td>
 														{% if trash.type == 0 %}
-														<a   href="/todo_type/{{trash.id}}/" class="btn btn-simple btn-info btn-icon" >일반</a>
+														<a  class="btn btn-simple btn-info btn-icon" >일반</a>
 														{% else %}
-														<a   href="/todo_type/{{trash.id}}/" class="btn btn-simple btn-danger btn-icon" >긴급</a>
+														<a   class="btn btn-simple btn-danger btn-icon" >긴급</a>
 														{% endif%}
 													</td>
 													<td>
 														{% if trash.success == 0 %}
-														<a   href="/todo_suc/{{trash.id}}/" class="btn btn-simple btn-danger btn-icon" ><i class="ti-close"></i></a>
+														<a   class="btn btn-simple btn-danger btn-icon" ><i class="ti-close"></i></a>
 														{% else %}
-														<a   href="/todo_suc/{{trash.id}}/" class="btn btn-simple btn-success btn-icon" ><i class="ti-check"></i></a>
+														<a   class="btn btn-simple btn-success btn-icon" ><i class="ti-check"></i></a>
 														{% endif%}
 													</td>
-													<td><a   href="/todo_edit/{{trash.id}}/" class="btn btn-simple btn-warning btn-icon" ><i class="ti-pencil-alt"></i></a></td>
+													<td><a   href="/todo_reload/{{trash.id}}/" class="btn btn-simple btn-warning btn-icon" onclick="return confirm('복원 하시겠습니까?');"><i class="ti-reload"></i></a></td>
 													<td><a   href="/todo_del/{{trash.id}}/" class="btn btn-simple btn-danger btn-icon" onclick="return confirm('삭제 하시겠습니까?');"><i class="ti-trash"></i></a></td>
 
 												</tr>
@@ -290,12 +278,12 @@
 									</div>
 								</div>
 								<div class="card-footer text-right">
-									<button type="button" class="btn btn-wd btn-success ">
+									<a type="button" href="{% url 'todo_reg' %}" class="btn btn-wd btn-success ">
 	                                            <span class="btn-label">
 	                                                <i class="fa fa-plus"></i>
 	                                            </span>
 	                                            TODO
-	                                        </button>
+	                                        </a>
 								</div>
 
 							</div>
@@ -461,9 +449,6 @@
 	                $table.bootstrapTable('resetView');
 	            });
 			});
-	        $(document).ready(function(){
-			demo.initWizard();
-		});
 
 
 	</script>

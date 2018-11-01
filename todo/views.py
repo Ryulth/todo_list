@@ -15,6 +15,7 @@ def main_page(request):
         todo_list=[]
         trash_list=[]
         late_list=[]
+        notify_list=[]
         for todo in todo_all:
             if todo.finish_date==None:
                 todo_list.append(todo)
@@ -22,11 +23,14 @@ def main_page(request):
                 todo_list.append(todo)
             elif todo.flag==1 and todo.finish_date<today:
                 late_list.append(todo)
-            if todo.flag==0:
+                if todo.success==0:
+                    notify_list.append(todo)
+            elif todo.flag==0:
                 trash_list.append(todo)
+
         return render(request, 'todo/main_page.html',
                       {'todo_list':todo_list ,'late_list':late_list,
-                       'trash_list':trash_list})
+                       'trash_list':trash_list,'notify_list':notify_list})
     else:
         return redirect('/signin')
 
@@ -53,7 +57,7 @@ def todo_edit(request,pk):
         print(request.POST)
         try:
             todo = TodoTb.objects.get(id=pk)
-            if todo.author_id==request.user.id :
+            if todo.author_id==request.user.id and todo.flag == 1:
                 if (request.POST['date'] == ''):
                     todo.title = request.POST['title']
                     todo.content = request.POST['content']
@@ -87,13 +91,28 @@ def todo_del(request,pk):
         try:
             todo=TodoTb.objects.get(id=pk)
             if todo.author_id == request.user.id:
-
                 if (todo.flag == 0):
                     todo.delete()
                 elif (todo.flag == 1):  # 1이 공개되있는거
                     todo.flag = 0
                     todo.save()
+            else:
+                pass
+        except TodoTb.DoesNotExist:
+            pass
+        finally:
+            return redirect('/')
+    else:
+        return redirect('/signin')
 
+def todo_reload(request,pk):
+    if request.user.is_authenticated:
+        try:
+            todo=TodoTb.objects.get(id=pk)
+            if todo.author_id == request.user.id:
+                if (todo.flag == 0):
+                    todo.flag = 1
+                    todo.save()
             else:
                 pass
         except TodoTb.DoesNotExist:
@@ -107,7 +126,7 @@ def todo_suc(request, pk):
     if request.user.is_authenticated:
         try:
             todo = TodoTb.objects.get(id=pk)
-            if todo.author_id == request.user.id:
+            if todo.author_id == request.user.id and todo.flag == 1:
                 if (todo.success== 0):
                     todo.success=1
                 elif (todo.success == 1):  # 1이 공개되있는거
@@ -126,7 +145,7 @@ def todo_type(request, pk):
     if request.user.is_authenticated:
         try:
             todo = TodoTb.objects.get(id=pk)
-            if todo.author_id == request.user.id:
+            if todo.author_id == request.user.id and todo.flag == 1:
                 if (todo.type== 0):
                     todo.type=1
                 elif (todo.type == 1):  # 1이 공개되있는거
