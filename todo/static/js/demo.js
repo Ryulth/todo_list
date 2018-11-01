@@ -755,6 +755,7 @@ demo = {
 
     initFormExtendedDatetimepickers: function(){
         $('.datetimepicker').datetimepicker({
+            format: 'YYYY-MM-DD H:mm',
             icons: {
                 time: "fa fa-clock-o",
                 date: "fa fa-calendar",
@@ -764,12 +765,13 @@ demo = {
                 next: 'fa fa-chevron-right',
                 today: 'fa fa-screenshot',
                 clear: 'fa fa-trash',
-                close: 'fa fa-remove'
+                close: 'fa fa-remove',
+
             }
          });
 
          $('.datepicker').datetimepicker({
-            format: 'MM/DD/YYYY',    //use this format if you want the 12hours timpiecker with AM/PM toggle
+            format: 'YYYY-MM-DD',    //use this format if you want the 12hours timpiecker with AM/PM toggle
             icons: {
                 time: "fa fa-clock-o",
                 date: "fa fa-calendar",
