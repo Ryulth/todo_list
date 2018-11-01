@@ -122,6 +122,7 @@
 
 						<div class="col-md-12">
 							<div class="card text-center">
+
 								<div class="card-header">
 									<ul class="nav nav-tabs card-header-tabs" role="tablist">
 										<li class="nav-item  ">
@@ -133,15 +134,18 @@
 										<li class="nav-item">
 											<a class="nav-link" id="fail-tab" data-toggle="tab" href="#fail" role="tab" aria-controls="fail"  aria-selected="false">FAIL</a>
 										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="trash-tab" data-toggle="tab" href="#trash" role="tab" aria-controls="fail"  aria-selected="false">TRASH</a>
+										</li>
 									</ul>
 								</div>
 								<div class="card-content">
 									<div class="tab-content" id="myTabContent">
-										<div class="tab-pane fade show active in" id="todo" role="tabpanel" aria-labelledby="todo-tab">
+										<div class="tab-pane fade active in" id="todo" role="tabpanel" aria-labelledby="todo-tab">
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
 											</div>
-											<table id="bootstrap-table" class="table ">
+											<table class="bootstrap-table" class="table ">
 												<thead >
 												<th data-field="state" data-checkbox="true"></th>
 												<th data-field="crdate" data-sortable="true" >등록</th>
@@ -149,6 +153,7 @@
 												<th data-field="title" data-sortable="true" >제목</th>
 												<th data-field="content" data-sortable="true" >내용</th>
 												<th data-field="type" data-sortable="true" >종류</th>
+												<th data-field="delete" data-sortable="true" >삭제</th>
 												<th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter" data-footer-formatter="operateFormatter">Actions</th>
 												</thead>
 
@@ -161,6 +166,7 @@
 													<td>{{todo.title}}</td>
 													<td>{{todo.content}}</td>
 													<td>{{todo.type}}</td>
+													<td><a   href="/todo_del/{{todo.id}}/" class="btn btn-simple btn-danger btn-icon" onclick="return confirm('Are you sure you want to delete this item?');"><i class="ti-close"></i></a></td>
 													<td></td>
 												</tr>
 												{% endfor %}
@@ -170,17 +176,50 @@
 											</table>
 										</div>
 										<div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">
-											<div class="card-body">
-												<h4 class="card-title">Ugg Boots</h4>
-												<p class="card-text">Best ugg boots on the planet. Free shipping, 24/7 customer service.</p>
-											</div>
+											DONELIST
 										</div>
-										<div class="tab-pane fade" id="fail" role="tabpanel" aria-labelledby="fail-tab">...</div>
+										<div class="tab-pane fade" id="fail" role="tabpanel" aria-labelledby="fail-tab">
+											FAILLIST
+										</div>
+										<div class="tab-pane fade" id="trash" role="tabpanel" aria-labelledby="trash-tab">
+											<div class="toolbar">
+												<!--Here you can write extra buttons/actions for the toolbar-->
+											</div>
+											<table class="bootstrap-table" class="table ">
+												<thead >
+												<th data-field="state" data-checkbox="true"></th>
+												<th data-field="crdate" data-sortable="true" >등록</th>
+												<th data-field="date" data-sortable="true" >기한</th>
+												<th data-field="title" data-sortable="true" >제목</th>
+												<th data-field="content" data-sortable="true" >내용</th>
+												<th data-field="type" data-sortable="true" >종류</th>
+												<th data-field="delete" data-sortable="true" >삭제</th>
+												<th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter" data-footer-formatter="operateFormatter">Actions</th>
+												</thead>
+
+												<tbody>
+												{% for trash in trash_list %}
+												<tr>
+													<td></td>
+													<td>{{trash.create_date|date:'y년 m월 d일 h시:m분'}}</td>
+													<td>{{trash.finish_date|date:'y년 m월 d일 h시:m분'}}</td>
+													<td>{{trash.title}}</td>
+													<td>{{trash.content}}</td>
+													<td>{{trash.type}}</td>
+													<td><a   href="/todo_del/{{trash.id}}/" class="btn btn-simple btn-danger btn-icon" onclick="return confirm('Are you sure you want to delete this item?');"><i class="ti-close"></i></a></td>
+													<td></td>
+												</tr>
+												{% endfor %}
+
+
+												</tbody>
+											</table>
+										</div>
 									</div>
-									</div>
-									<div class="card-footer">
-										Yes I Can !
-									</div>
+								</div>
+								<div class="card-footer">
+									Yes I Can !
+								</div>
 
 							</div>
 						</div>
@@ -243,20 +282,12 @@
 	<!--  Switch and Tags Input Plugins -->
 	<script src="{% static 'js/bootstrap-switch-tags.js'%}"></script>
 
-	<!-- Circle Percentage-chart -->
-	<script src="{% static 'js/jquery.easypiechart.min.js'%}"></script>
-
-	<!--  Charts Plugin -->
-	<script src="{% static 'js/chartist.min.js'%}"></script>
-
 	<!--  Notifications Plugin    -->
 	<script src="{% static 'js/bootstrap-notify.js'%}"></script>
 
 	<!-- Sweet Alert 2 plugin -->
 	<script src="{% static 'js/sweetalert2.js'%}"></script>
 
-	<!-- Vector Map plugin -->
-	<script src="{% static 'js/jquery-jvectormap.js'%}"></script>
 
 	<!-- Wizard Plugin    -->
 	<script src="{% static 'js/jquery.bootstrap.wizard.min.js'%}"></script>
@@ -277,7 +308,7 @@
 	<script src="{% static 'js/demo.js'%}"></script>
 	<script type="text/javascript">
 
-		var $table = $('#bootstrap-table');
+		var $table = $('.bootstrap-table');
 
 	        function operateFormatter(value, row, index) {
 	            return [
@@ -353,6 +384,9 @@
 	                $table.bootstrapTable('resetView');
 	            });
 			});
+	        $(document).ready(function(){
+			demo.initWizard();
+		});
 
 
 	</script>

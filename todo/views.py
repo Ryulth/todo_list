@@ -10,9 +10,22 @@ import datetime
 
 def main_page(request):
     if request.user.is_authenticated:
-        todo_list=TodoTb.objects.filter(author_id=request.user.id).order_by('-type','finish_date','-create_date')
+        todo_all=TodoTb.objects.filter(author_id=request.user.id).order_by('-type','finish_date','-create_date')
+        todo_list=[]
+        trash_list=[]
+        done_list = []
+        fail_list = []
+        for todo in todo_all:
+            if todo.flag==1 and todo.success==0:
+                todo_list.append(todo)
+            if todo.flag==1 and todo.success==1:
+                done_list.append(todo)
+            if todo.flag==0:
+                trash_list.append(todo)
 
-        return render(request, 'todo/main_page.html',{'todo_list':todo_list})
+        return render(request, 'todo/main_page.html',
+                      {'todo_list':todo_list ,'done_list':done_list,
+                       'trash_list':trash_list,'fail_list':fail_list})
     else:
         return redirect('/signin')
 
@@ -34,7 +47,22 @@ def todo_reg(request):
         else:
             return redirect('/signin')
 
-
+def todo_del(request,pk):
+    if request.user.is_authenticated:
+        try:
+            todo=TodoTb.objects.get(id=pk)
+            print (todo)
+            if(todo.flag==1):#1이 공개되있는거
+                todo.flag=0
+                todo.save()
+            elif(todo.flag==0):
+                todo.delete()
+        except TodoTb.DoesNotExist:
+            pass
+        finally:
+            return redirect('/')
+    else:
+        return redirect('/signin')
 def signin(request):
     if request.user.is_authenticated:
         return redirect('/')

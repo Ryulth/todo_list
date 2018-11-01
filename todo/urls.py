@@ -7,4 +7,5 @@ urlpatterns = [
     url('signup/', views.signup, name='signup'),
     url('logout/',auth_views.LogoutView.as_view(), name='logout'),
     url('todo_reg/',views.todo_reg,name='todo_reg'),
+    url('todo_del/(?P<pk>\d+)/$',views.todo_del,name='todo_del'),
 ]
