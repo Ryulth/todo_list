@@ -125,7 +125,7 @@
 									<div class="card-content">
 										<br>
 										<h2 class="card-title" style="text-align: center">
-											<b>TODO EDIT</b>
+											<b>TODO Detail</b>
 										</h2>
 										<br>
 										<fieldset>
@@ -136,12 +136,10 @@
 													<input  type="text" class="form-control datetimepicker"  placeholder="날짜" name="date" />
 													</div>
 													<div class="col-xs-4 col-lg-2">
-															<select class="selectpicker" name="type" data-live-search="false" data-style="btn btn-block dropdown-toggle" title="종류" data-size="7">
+															<select class="selectpicker" name="type" data-live-search="false" data-style="btn btn-block" title="종류" data-size="7">
 																{% if todo.type == 0 %}
 																<option value="0" selected="selected">일반</option>
-																<option value="1" >긴급</option>
 																{% else %}
-																<option value="0" >일반</option>
 																<option value="1" selected="selected">긴급</option>
 																{% endif%}
 															</select>

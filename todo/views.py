@@ -17,7 +17,7 @@ def main_page(request):
         late_list=[]
         notify_list=[]
         for todo in todo_all:
-            if todo.finish_date==None:
+            if todo.finish_date==None and todo.flag==1:
                 todo_list.append(todo)
             elif todo.flag==1 and todo.finish_date>=today:
                 todo_list.append(todo)
@@ -54,19 +54,20 @@ def todo_reg(request):
 
 def todo_edit(request,pk):
     if request.method == 'POST':
-        print(request.POST)
         try:
             todo = TodoTb.objects.get(id=pk)
-            if todo.author_id==request.user.id and todo.flag == 1:
+            if (todo.author_id==request.user.id and todo.flag == 1):
                 if (request.POST['date'] == ''):
                     todo.title = request.POST['title']
                     todo.content = request.POST['content']
                     todo.type = request.POST['type']
+                    todo.save()
                 else :
                     todo.finish_date = request.POST['date']
                     todo.title = request.POST['title']
                     todo.content = request.POST['content']
                     todo.type = request.POST['type']
+                    todo.save()
             else:
                 pass
         except TodoTb.DoesNotExist:
@@ -85,6 +86,19 @@ def todo_edit(request,pk):
                 return redirect('/')
         else:
             return redirect('/signin')
+
+def todo_detail(request,pk):
+    if request.user.is_authenticated:
+        try:
+            todo = TodoTb.objects.get(id=pk)
+            if todo.author_id == request.user.id:
+                return render(request, 'todo/todo_detail.html', {'todo': todo})
+            else:
+                return redirect('/')
+        except TodoTb.DoesNotExist:
+            return redirect('/')
+    else:
+        return redirect('/signin')
 
 def todo_del(request,pk):
     if request.user.is_authenticated:
@@ -126,7 +140,7 @@ def todo_suc(request, pk):
     if request.user.is_authenticated:
         try:
             todo = TodoTb.objects.get(id=pk)
-            if todo.author_id == request.user.id and todo.flag == 1:
+            if (todo.author_id == request.user.id and todo.flag == 1):
                 if (todo.success== 0):
                     todo.success=1
                 elif (todo.success == 1):  # 1이 공개되있는거
@@ -189,3 +203,7 @@ def signup(request):
     else:
         form = UserForm()
         return render(request, 'todo/login.html', {'form': form})
+
+def test(request):
+    todo_all = TodoTb.objects.filter(author_id=request.user.id).order_by('-type', 'finish_date', '-create_date')
+    return render(request,"todo/test.html",{'todo_list':todo_all})

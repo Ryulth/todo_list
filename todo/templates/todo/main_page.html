@@ -82,15 +82,11 @@
 	    					</div>
 	    				</form>
 	                    <ul class="nav navbar-nav navbar-right">
-	                        <li>
-	                            <a href="#stats" class="dropdown-toggle btn-magnify" data-toggle="dropdown">
-	                                <i class="ti-panel"></i>
-									<p>Stats</p>
-	                            </a>
-	                        </li>
+
 	                        <li class="dropdown">
 	                            <a href="#notifications" class="dropdown-toggle btn-rotate" data-toggle="dropdown">
-	                                <i class="ti-bell"></i>
+
+									<i class="ti-bell"></i>
 	                                <span class="notification">{{notify_list|length}}</span>
 									<p class="hidden-md hidden-lg">
 										Notifications
@@ -141,12 +137,13 @@
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
 											</div>
-											<table class="bootstrap-table" class="table">
+
+											<table class="bootstrap-table table ">
 												<thead >
-												<th data-field="state" data-checkbox="true"></th>
-												<th class="col-xs-3 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
-												<th class="col-xs-3 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
-												<th class="col-xs-8 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
+
+												<th class="col-xs-2 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
+												<th class="col-xs-2 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
+												<th class="col-xs-4 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >편집</th>
@@ -155,8 +152,8 @@
 												<tbody>
 												{% for todo in todo_list %}
 												<tr>
-													<td></td>
-													<td>{{todo.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
+
+													<td class="text-left"> {{todo.finish_date|date:'20y년m월d일 h시:m분'|default:'ㅡ'}}</td>
 													<td class="text-left">{{todo.title}}</td>
 													<td class="text-left">{{todo.content}}</td>
 													<td>
@@ -182,6 +179,7 @@
 
 												</tbody>
 											</table>
+
 										</div>
 
 										<div class="tab-pane fade" id="late" role="tabpanel" aria-labelledby="late-tab">
@@ -190,10 +188,9 @@
 											</div>
 											<table class="bootstrap-table" class="table ">
 												<thead>
-												<th data-field="state" data-checkbox="true"></th>
-												<th class="col-xs-3 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
-												<th class="col-xs-3 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
-												<th class="col-xs-8 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
+												<th class="col-xs-2 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
+												<th class="col-xs-2 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
+												<th class="col-xs-4 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >편집</th>
@@ -202,8 +199,8 @@
 												<tbody>
 												{% for late in late_list %}
 												<tr>
-													<td></td>
-													<td>{{late.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
+
+													<td class="text-left">{{late.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
 													<td class="text-left">{{late.title}}</td>
 													<td class="text-left">{{late.content}}</td>
 													<td>
@@ -235,10 +232,10 @@
 											</div>
 											<table class="bootstrap-table" class="table ">
 												<thead >
-												<th data-field="state" data-checkbox="true"></th>
-												<th class="col-xs-3 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
-												<th class="col-xs-3 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
-												<th class="col-xs-8 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
+
+												<th class="col-xs-2 col-lg-2 text-center" data-field="date" data-sortable="true" >기한</th>
+												<th class="col-xs-2 col-lg-2 text-center"data-field="title" data-sortable="true" >제목</th>
+												<th class="col-xs-4 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >복원</th>
@@ -247,8 +244,8 @@
 												<tbody>
 												{% for trash in trash_list %}
 												<tr>
-													<td></td>
-													<td>{{trash.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
+
+													<td class="text-left">{{trash.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
 													<td class="text-left">{{trash.title}}</td>
 													<td class="text-left">{{trash.content}}</td>
 													<td>
