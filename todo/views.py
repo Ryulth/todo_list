@@ -36,6 +36,9 @@ def main_page(request):
         return redirect('/signin')
 
 def todo_reg(request):
+    today = datetime.now()
+    notify_list=TodoTb.objects.filter(author_id=request.user.id,flag=1,success=0,finish_date__lt=today).order_by('-type','finish_date','-create_date')
+    
     if request.method == 'POST':
         print(request.POST)
         if(request.POST['date']==''):
@@ -49,11 +52,13 @@ def todo_reg(request):
         return redirect('/todo_reg')
     else:
         if request.user.is_authenticated:
-            return render(request, 'todo/todo_reg.html')
+            return render(request, 'todo/todo_reg.html',{'notify_list':notify_list})
         else:
             return redirect('/signin')
 
 def todo_edit(request,pk):
+    today = datetime.now()
+    notify_list=TodoTb.objects.filter(author_id=request.user.id,flag=1,success=0,finish_date__lt=today).order_by('-type','finish_date','-create_date')
     if request.method == 'POST':
         try:
             todo = TodoTb.objects.get(id=pk)
@@ -80,7 +85,7 @@ def todo_edit(request,pk):
             try:
                 todo = TodoTb.objects.get(id=pk)
                 if todo.author_id == request.user.id:
-                    return render(request, 'todo/todo_edit.html', {'todo': todo})
+                    return render(request, 'todo/todo_edit.html', {'todo': todo,'notify_list':notify_list})
                 else:
                     return redirect('/')
             except TodoTb.DoesNotExist:
@@ -89,11 +94,13 @@ def todo_edit(request,pk):
             return redirect('/signin')
 
 def todo_detail(request,pk):
+    today = datetime.now()
+    notify_list=TodoTb.objects.filter(author_id=request.user.id,flag=1,success=0,finish_date__lt=today).order_by('-type','finish_date','-create_date')
     if request.user.is_authenticated:
         try:
             todo = TodoTb.objects.get(id=pk)
             if todo.author_id == request.user.id:
-                return render(request, 'todo/todo_detail.html', {'todo': todo})
+                return render(request, 'todo/todo_detail.html', {'todo': todo,'notify_list':notify_list})
             else:
                 return redirect('/')
         except TodoTb.DoesNotExist:

@@ -42,7 +42,7 @@
 	            <ul class="nav">
 					<li class="active">
 	                    <a href="{% url 'main_page' %}" >
-	                        <i class="ti-calendar"></i>
+	                        <i class="ti-list"></i>
 	                        <p>TODO LIST
                             </p>
 	                    </a>
@@ -81,11 +81,13 @@
 	                        <li class="dropdown">
 	                            <a href="#notifications" class="dropdown-toggle btn-rotate" data-toggle="dropdown">
 
-									<i class="ti-bell"></i>
-	                                <span class="notification">{{notify_list|length}}</span>
+									
 									<p >
 										Notifications
+										<i class="ti-bell"></i>
+	                                	<span class="notification">{{notify_list|length}}</span>
 										<b class="caret"></b>
+										
 									</p>
 	                            </a>
 	                            <ul class="dropdown-menu">
@@ -96,8 +98,9 @@
 	                        </li>
 							<li>
 	                            <a href="{% url 'logout' %}">
-											<i class="ti-settings"></i>
-											<p>Logout</p>
+											<p>Logout
+											<i class="ti-arrow-right"></i>
+										</p>
 								</a>
 	                        </li>
 	                    </ul>
