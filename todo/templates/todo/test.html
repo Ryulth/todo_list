@@ -118,22 +118,22 @@
 							<div class="card text-center">
 
 								<div class="card-header">
-									<ul class="nav nav-tabs ">
-										<li class="nav-item  active">
-											<a  id="todo-tab" data-toggle="tab"href="#todo"  role="tab" aria-controls="todo" aria-selected="true">TODO</a>
+									<ul class="nav nav-tabs " id="mytab">
+										<li calss="  active">
+											<a  href="#todo"  >TODO</a>
 										</li>
-										<li class="nav-item">
-											<a  id="late-tab" data-toggle="tab" href="#late" role="tab" aria-controls="late"  aria-selected="false">LATE</a>
+										<li >
+											<a   href="#late" >LATE</a>
 										</li>
-										<li class="nav-item">
-											<a id="trash-tab" data-toggle="tab" href="#trash" role="tab" aria-controls="trash"  aria-selected="false">TRASH</a>
+										<li>
+											<a  href="#trash" >TRASH</a>
 										</li>
 
 									</ul>
 								</div>
 								<div class="card-content">
 									<div class="tab-content" id="myTabContent">
-										<div class="tab-pane fade active in" id="todo" role="tabpanel" aria-labelledby="todo-tab">
+										<div class="tab-pane active in" id="todo">
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
 											</div>
@@ -182,7 +182,7 @@
 
 										</div>
 
-										<div class="tab-pane fade" id="late" role="tabpanel" aria-labelledby="late-tab">
+										<div class="tab-pane" id="late" >
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
 											</div>
@@ -226,7 +226,7 @@
 											</table>
 										</div>
 
-										<div class="tab-pane fade" id="trash" role="tabpanel" aria-labelledby="trash-tab">
+										<div class="tab-pane" id="trash" >
 											<div class="toolbar">
 												<!--Here you can write extra buttons/actions for the toolbar-->
 											</div>
@@ -369,8 +369,19 @@
 	<!-- Paper Dashboard PRO DEMO methods, don't include it in your project! -->
 	<script src="{% static 'js/demo.js'%}"></script>
 	<script type="text/javascript">
-
-		var $table = $('.bootstrap-table');
+      $(document).ready(function() {
+    if (location.hash) {
+        $("a[href='" + location.hash + "']").tab("show");
+    }
+    $(document.body).on("click", "a[data-toggle]", function(event) {
+        location.hash = this.getAttribute("href");
+    });
+});
+$(window).on("popstate", function() {
+    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+    $("a[href='" + anchor + "']").tab("show");
+});
+        var $table = $('.bootstrap-table');
 
 	        function operateFormatter(value, row, index) {
 	            return [

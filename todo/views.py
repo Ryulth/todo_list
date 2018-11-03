@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.utils import timezone
 from datetime import datetime
+from django.urls import resolve
 # Create your views here.
 
 def main_page(request):
@@ -100,7 +101,7 @@ def todo_detail(request,pk):
     else:
         return redirect('/signin')
 
-def todo_del(request,pk):
+def todo_del(request,pk,type):
     if request.user.is_authenticated:
         try:
             todo=TodoTb.objects.get(id=pk)
@@ -115,7 +116,7 @@ def todo_del(request,pk):
         except TodoTb.DoesNotExist:
             pass
         finally:
-            return redirect('/')
+            return redirect('/#' + type)
     else:
         return redirect('/signin')
 
@@ -132,11 +133,11 @@ def todo_reload(request,pk):
         except TodoTb.DoesNotExist:
             pass
         finally:
-            return redirect('/')
+            return redirect('/#trash')
     else:
         return redirect('/signin')
 
-def todo_suc(request, pk):
+def todo_suc(request, pk,type):
     if request.user.is_authenticated:
         try:
             todo = TodoTb.objects.get(id=pk)
@@ -151,11 +152,11 @@ def todo_suc(request, pk):
         except TodoTb.DoesNotExist:
             pass
         finally:
-            return redirect('/')
+            return redirect('/#'+type)
     else:
         return redirect('/signin')
 
-def todo_type(request, pk):
+def todo_type(request, pk,type):
     if request.user.is_authenticated:
         try:
             todo = TodoTb.objects.get(id=pk)
@@ -170,7 +171,7 @@ def todo_type(request, pk):
         except TodoTb.DoesNotExist:
             pass
         finally:
-            return redirect('/')
+            return redirect('/#' + type)
     else:
         return redirect('/signin')
 
