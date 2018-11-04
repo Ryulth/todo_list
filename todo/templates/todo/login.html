@@ -49,7 +49,12 @@
               <button type="submit" class="button button-block"/>로 그 인</button>
 
               </form>
-
+              <br>
+            <form action="{% url 'signin' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="username" id="username" value="demo">
+                <input type="hidden" name="password" id="password" value="demo">
+              <button type="submit"   class="button button-block">DEMO Version Here!</button>
+            </form>
             </div>
 
         <div id="signup">
@@ -104,6 +109,7 @@
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
     <script  src="{% static 'js/login.js' %}"></script>
+
 </body>
 
 </html>
