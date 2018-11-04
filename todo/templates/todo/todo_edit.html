@@ -43,15 +43,15 @@
 					<li >
 	                    <a href="{% url 'main_page' %}" >
 	                        <i class="ti-list"></i>
-	                        <p>TODO LIST
+	                        <p>TODO 목록
                             </p>
 	                    </a>
 	                </li>
 
-	                <li >
-	                    <a href="{% url 'todo_reg' %}" >
+	                <li>
+	                    <a href="{% url 'todo_reg' %}">
 	                        <i class="ti-plus"></i>
-	                        <p>TODO REGISTER</p>
+	                        <p>TODO 추가</p>
 	                    </a>
 	                </li>
 
@@ -72,7 +72,7 @@
 	                        <span class="icon-bar bar2"></span>
 	                        <span class="icon-bar bar3"></span>
 	                    </button>
-	                    <a class="navbar-brand" href="#">{{ user.last_name }} {{ user.first_name }} 님 </a>
+	                    <a class="navbar-brand" href="/">{{ user.last_name }} {{ user.first_name }} 님 </a>
 	                </div>
 	                <div class="collapse navbar-collapse">
 
@@ -92,7 +92,7 @@
 	                            </a>
 	                            <ul class="dropdown-menu">
 									{% for notify in notify_list%}
-	                                <li><a href="#not1">{{notify.finish_date|date:'m월 d일'|default:'ㅡ'}} : {{notify.title}}</a></li>
+	                                <li><a href="/todo_detail/{{notify.id}}/" >{{notify.finish_date|date:'m월 d일'|default:'기한없음'}} : {{notify.title}}</a></li>
 									{% endfor %}
 	                            </ul>
 	                        </li>
@@ -117,7 +117,7 @@
 									<div class="card-content">
 										<br>
 										<h2 class="card-title" style="text-align: center">
-											<b>TODO EDIT</b>
+											<b>TODO 수정</b>
 										</h2>
 										<br>
 										<fieldset>
@@ -125,7 +125,7 @@
 												<div class="form-group">
 													<label class="col-xs-3 col-lg-1 control-label">날짜</label>
 													<div class="col-xs-9 col-lg-5">
-													<input  type="text" class="form-control datetimepicker"  placeholder="날짜" name="date" />
+													<input  type="text" class="form-control datetimepicker"   name="date" value="{{todo.finish_date|date:'20y-m-d H:i'|default:'기한없음'}}">
 													</div>
 												</div>
 											</div>
@@ -178,7 +178,7 @@
 									</div>
 									<div class="card-footer text-center">
 
-										<button type="submit" class="btn btn-info btn-fill">Validate Inputs</button>
+										<button type="submit" class="btn btn-info btn-fill">Update TODO</button>
 									</div>
                                 </form>
                             </div>
@@ -189,28 +189,28 @@
 	        </div>
 
 	        <footer class="footer">
-	            <div class="container-fluid">
+				<div class="container-fluid">
 	                <nav class="pull-left">
 	                    <ul>
 	                        <li>
-	                            <a href="https://www.creative-tim.com">
-	                                Creative Tim
+	                            <a href="http://ryulth.com">
+	                                HyungRyul Kim
 	                            </a>
 	                        </li>
 	                        <li>
-	                            <a href="https://blog.creative-tim.com">
-	                               Blog
+	                            <a href="https://github.com/Ryulth/todo_list">
+	                               Github
 	                            </a>
-	                        </li>
-	                        <li>
-	                            <a href="https://www.creative-tim.com/license">
-	                                Licenses
+							</li>
+							<li>
+	                            <a href="mailto:adboy94@khu.ac.kr">
+	                               Contact
 	                            </a>
 	                        </li>
 	                    </ul>
 	                </nav>
 	                <div class="copyright pull-right">
-	                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="https://www.creative-tim.com">Creative Tim</a>
+	                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://ryulth.com">HyungRyul Kim</a>
 	                </div>
 	            </div>
 	        </footer>

@@ -43,15 +43,15 @@
 					<li >
 	                    <a href="{% url 'main_page' %}" >
 	                        <i class="ti-list"></i>
-	                        <p>TODO LIST
+	                        <p>TODO 목록
                             </p>
 	                    </a>
 	                </li>
 
-	                <li >
-	                    <a href="{% url 'todo_reg' %}" >
+	                <li>
+	                    <a href="{% url 'todo_reg' %}">
 	                        <i class="ti-plus"></i>
-	                        <p>TODO REGISTER</p>
+	                        <p>TODO 추가</p>
 	                    </a>
 	                </li>
 
@@ -72,7 +72,7 @@
 	                        <span class="icon-bar bar2"></span>
 	                        <span class="icon-bar bar3"></span>
 	                    </button>
-	                    <a class="navbar-brand" href="#">{{ user.last_name }} {{ user.first_name }} 님 </a>
+	                    <a class="navbar-brand" href="/">{{ user.last_name }} {{ user.first_name }} 님 </a>
 	                </div>
 	                <div class="collapse navbar-collapse">
 
@@ -92,7 +92,7 @@
 	                            </a>
 	                            <ul class="dropdown-menu">
 									{% for notify in notify_list%}
-	                                <li><a href="#not1">{{notify.finish_date|date:'m월 d일'|default:'ㅡ'}} : {{notify.title}}</a></li>
+	                                <li><a href="/todo_detail/{{notify.id}}/">{{notify.finish_date|date:'m월 d일'|default:'기한없음'}} : {{notify.title}}</a></li>
 									{% endfor %}
 	                            </ul>
 	                        </li>
@@ -107,6 +107,7 @@
 	                </div>
 	            </div>
 	        </nav>
+
 	        <div class="content">
 	            <div class="container-fluid">
                     <div class="row">
@@ -116,47 +117,79 @@
 									<div class="card-content">
 										<br>
 										<h2 class="card-title" style="text-align: center">
-											<b>TODO Detail</b>
+											<b>TODO</b>
 										</h2>
 										<br>
 										<fieldset>
-											
 											<div class="col-lg-12">
 												<div class="form-group">
 													<label class="col-xs-3 col-lg-1 control-label">날짜</label>
 													<div class="col-xs-9 col-lg-5">
-														<textarea class="form-control" name = "title" rows="1">{{todo.finish_date|date:'20y년 m월 d일 h시:m분'|default:'기한없음'}}</textarea>
+													<p  class="form-control">{{todo.finish_date|date:'20y-m-d H:i'|default:'기한없음'}}</p>
 													</div>
-												</div>	
-											
+												</div>
 											</div>
 										</fieldset>
 										<br>
 										<fieldset>
 											<div class="col-lg-12">
-													<div class="form-group">
-														<label class="col-xs-3 col-lg-1 control-label">종류</label>
-														<div class="col-xs-9 col-lg-5">
+												<div class="form-group">
+													<label class="col-xs-3 col-lg-1 control-label">종류</label>
+												
+													<div class="col-xs-3 col-lg-2">
 															
-																<select class="selectpicker" name="type" data-live-search="false" data-style="btn btn-block" title="종류" data-size="7">
-																	{% if todo.type == 0 %}
-																	<option value="0" selected="selected">일반</option>
+																{% if todo.type == 0 %}
+																<button type="button" class="btn btn-wd btn-success">
+																		<span class="btn-label">
+																				
+																		</span>
+																		일반
+																	</button>
+															
+																{% else %}
+																<button type="button" class="btn btn-wd btn-danger">
+																		<span class="btn-label">
+																				
+																		</span>
+																		긴급
+																	</button>
+															
+																{% endif%}
+														</div>
+												
+														<label class="col-xs-3 col-lg-1 control-label">성공</label>
+													
+														<div class="col-xs-3 col-lg-2">
+																
+																	{% if todo.success == 0 %}
+																	<button type="button" class="btn btn-wd btn-danger">
+																			<span class="btn-label">
+																				<i class="fa fa-times"></i>
+																			</span>
+																			
+																		</button>
+																
 																	{% else %}
-																	<option value="1" selected="selected">긴급</option>
+																	<button type="button" class="btn btn-wd btn-success">
+																			<span class="btn-label">
+																				<i class="fa fa-check"></i>
+																			</span>
+																			
+																		</button>
+																
 																	{% endif%}
-																</select>
 															</div>
 													</div>
-												</div>
-											</fieldset>
-											<br>
+											</div>
+										</fieldset>
+										<br>
 										<fieldset>
 
 											<div class="col-md-12">
 												<div class="form-group">
 												<label class="col-xs-3 col-lg-1 control-label">제목</label>
 												<div class="col-xs-9 col-lg-11">
-													<textarea class="form-control" name = "title" >{{todo.title}}</textarea>
+													<p class="form-control"  name = "title" >{{todo.title}}</p>
 												</div>
 												</div>
 											</div>
@@ -167,8 +200,7 @@
 												<div class="form-group">
 													<label class="col-xs-3 col-lg-1 control-label">내용</label>
 													<div class="col-xs-9 col-lg-11" >
-														<textarea class="form-control" name = "content"  rows="6">{{todo.content}}</textarea>
-													</div>
+														<p class="form-control" name = "content"  rows="6">{{todo.content}}</p>										</div>
 												</div>
 											</div>
 										</fieldset>
@@ -176,7 +208,12 @@
 									</div>
 									<div class="card-footer text-center">
 
-										<button type="submit" class="btn btn-info btn-fill">Validate Inputs</button>
+											<a href="/todo_edit/{{todo.id}}/" type="button" class="btn btn-wd btn-warning btn-magnify">
+													<span class="btn-label">
+														<i class="ti-pencil-alt"></i>
+													</span>
+													수정
+												</a>
 									</div>
                                 </form>
                             </div>
@@ -187,28 +224,28 @@
 	        </div>
 
 	        <footer class="footer">
-	            <div class="container-fluid">
+				<div class="container-fluid">
 	                <nav class="pull-left">
 	                    <ul>
 	                        <li>
-	                            <a href="https://www.creative-tim.com">
-	                                Creative Tim
+	                            <a href="http://ryulth.com">
+	                                HyungRyul Kim
 	                            </a>
 	                        </li>
 	                        <li>
-	                            <a href="https://blog.creative-tim.com">
-	                               Blog
+	                            <a href="https://github.com/Ryulth/todo_list">
+	                               Github
 	                            </a>
-	                        </li>
-	                        <li>
-	                            <a href="https://www.creative-tim.com/license">
-	                                Licenses
+							</li>
+							<li>
+	                            <a href="mailto:adboy94@khu.ac.kr">
+	                               Contact
 	                            </a>
 	                        </li>
 	                    </ul>
 	                </nav>
 	                <div class="copyright pull-right">
-	                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="https://www.creative-tim.com">Creative Tim</a>
+	                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://ryulth.com">HyungRyul Kim</a>
 	                </div>
 	            </div>
 	        </footer>

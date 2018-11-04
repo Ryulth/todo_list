@@ -31,14 +31,14 @@
               <form action="{% url 'signin' %}" method="post">{% csrf_token %}
 
                 <div class="field-wrap">
-                <label>
+                <label class = "active">
                   아이디<span class="req">*</span>
                 </label>
                 <input type="text" name="username" id="username" required autocomplete="off"/>
               </div>
 
               <div class="field-wrap">
-                <label>
+                <label class = "active">
                   비밀번호<span class="req">*</span>
                 </label>
                 <input type="password" name="password" id="password" required autocomplete="off"/>

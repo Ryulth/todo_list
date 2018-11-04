@@ -43,7 +43,7 @@
 					<li class="active">
 	                    <a href="{% url 'main_page' %}" >
 	                        <i class="ti-list"></i>
-	                        <p>TODO LIST
+	                        <p>TODO 목록
                             </p>
 	                    </a>
 	                </li>
@@ -51,7 +51,7 @@
 	                <li>
 	                    <a href="{% url 'todo_reg' %}">
 	                        <i class="ti-plus"></i>
-	                        <p>TODO REGISTER</p>
+	                        <p>TODO 추가</p>
 	                    </a>
 	                </li>
 
@@ -72,7 +72,7 @@
 	                        <span class="icon-bar bar2"></span>
 	                        <span class="icon-bar bar3"></span>
 	                    </button>
-	                    <a class="navbar-brand" href="#">{{ user.last_name }} {{ user.first_name }} 님 </a>
+	                    <a class="navbar-brand" href="/">{{ user.last_name }} {{ user.first_name }} 님 </a>
 	                </div>
 	                <div class="collapse navbar-collapse">
 
@@ -92,7 +92,7 @@
 	                            </a>
 	                            <ul class="dropdown-menu">
 									{% for notify in notify_list%}
-	                                <li><a href="#not1">{{notify.finish_date|date:'m월 d일'|default:'ㅡ'}} : {{notify.title}}</a></li>
+	                                <li><a href="/todo_detail/{{notify.id}}/" >{{notify.finish_date|date:'m월 d일'|default:'기한없음'}} : {{notify.title}}</a></li>
 									{% endfor %}
 	                            </ul>
 	                        </li>
@@ -143,16 +143,16 @@
 												<th class="col-xs-4 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
-												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >편집</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >수정</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="delete" >삭제</th>
 												</thead>
 												<tbody>
 												{% for todo in todo_list %}
 												<tr>
 
-													<td class="text-left"> {{todo.finish_date|date:'20y년m월d일 h시:m분'|default:'ㅡ'}}</td>
-													<td class="text-left">{{todo.title}}</td>
-													<td class="text-left">{{todo.content}}</td>
+													<td class="text-left"><a href="/todo_detail/{{todo.id}}/" class="btn btn-simple btn-icon">{{todo.finish_date|date:'20y년 m월 d일 H시:i분'|default:'기한없음'}}</a> </td>
+													<td class="text-left"><a href="/todo_detail/{{todo.id}}/" class="btn btn-simple btn-icon">{{todo.title}}</a> </td>
+													<td class="text-left"><a href="/todo_detail/{{todo.id}}/" class="btn btn-simple btn-icon">{{todo.content}}</a> </td>
 													<td>
 														{% if todo.type == 0 %}
 														<a   href="/todo_type/{{todo.id}}/todo" class="btn btn-simple btn-info btn-icon" >일반</a>
@@ -190,16 +190,17 @@
 												<th class="col-xs-4 col-lg-4 text-center"data-field="content" data-sortable="true" >내용</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="type" data-sortable="true" >종류</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="success" data-sortable="true">성공</th>
-												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >편집</th>
+												<th class="col-xs-1 col-lg-1 text-center"data-field="edit"  >수정</th>
 												<th class="col-xs-1 col-lg-1 text-center"data-field="delete" >삭제</th>
 												</thead>
 												<tbody>
 												{% for late in late_list %}
 												<tr>
-
-													<td class="text-left">{{late.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
-													<td class="text-left">{{late.title}}</td>
-													<td class="text-left">{{late.content}}</td>
+														
+													<td class="text-left"><a href="/todo_detail/{{late.id}}/" class="btn btn-simple btn-icon">{{late.finish_date|date:'20y년 m월 d일 H시:i분'|default:'기한없음'}}</a></td>
+													<td class="text-left"><a href="/todo_detail/{{late.id}}/ "class="btn btn-simple btn-icon">{{late.title}}</a></td>
+													<td class="text-left"><a href="/todo_detail/{{late.id}}/"class="btn btn-simple btn-icon">{{late.content}}</a></td>
+													
 													<td>
 														{% if late.type == 0 %}
 														<a   href="/todo_type/{{late.id}}/late" class="btn btn-simple btn-info btn-icon" >일반</a>
@@ -242,7 +243,7 @@
 												{% for trash in trash_list %}
 												<tr>
 
-													<td class="text-left">{{trash.finish_date|date:'20y년 m월 d일 h시:m분'|default:'ㅡ'}}</td>
+													<td class="text-left">{{trash.finish_date|date:'20y년 m월 d일 h시:i분'|default:'기한없음'}}</td>
 													<td class="text-left">{{trash.title}}</td>
 													<td class="text-left">{{trash.content}}</td>
 													<td>
@@ -271,12 +272,13 @@
 										</div>
 									</div>
 								</div>
-								<div class="card-footer text-right">
+								<div class="card-footer ">
+									
 									<a type="button" href="{% url 'todo_reg' %}" class="btn btn-wd btn-success ">
 	                                            <span class="btn-label">
 	                                                <i class="fa fa-plus"></i>
 	                                            </span>
-	                                            TODO
+	                                            TODO 추가
 	                                        </a>
 								</div>
 
@@ -292,24 +294,24 @@
 	                <nav class="pull-left">
 	                    <ul>
 	                        <li>
-	                            <a href="https://www.creative-tim.com">
-	                                Creative Tim
+	                            <a href="http://ryulth.com">
+	                                HyungRyul Kim
 	                            </a>
 	                        </li>
 	                        <li>
-	                            <a href="https://blog.creative-tim.com">
-	                               Blog
+	                            <a href="https://github.com/Ryulth/todo_list">
+	                               Github
 	                            </a>
-	                        </li>
-	                        <li>
-	                            <a href="https://www.creative-tim.com/license">
-	                                Licenses
+							</li>
+							<li>
+	                            <a href="mailto:adboy94@khu.ac.kr">
+	                               Contact
 	                            </a>
 	                        </li>
 	                    </ul>
 	                </nav>
 	                <div class="copyright pull-right">
-	                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="https://www.creative-tim.com">Creative Tim</a>
+	                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://ryulth.com">HyungRyul Kim</a>
 	                </div>
 	            </div>
 	        </footer>
