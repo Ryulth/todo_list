@@ -1,7 +1,7 @@
 # TODO LIST
 사용자의 할일 목록을 보여주고 작성 및 수정 가능하게 한다.
 ## DEMO
-* [유튜브](https://youtu.be/ZcBU4LjFQds)
+* [유튜브](https://youtu.be/q8WqLHNbvHw)
 * [TODO 사이트](http://todo.ryulth.com)
 * DEMO ID : DEMO
 * DEMO PW : DEMO
