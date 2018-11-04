@@ -1,0 +1,15 @@
+version: '2'
+services:
+    todo:
+        build:
+            context: .
+            dockerfile: ./Dockerfile_todo
+    
+        volumes: 
+            - .:/code:rw
+        environment:
+            - DJANGO_DEBUG=False 
+         
+        command : > 
+            sh -c "virtualenv --system-site-packages -p python3 venv/ 
+            && uwsgi --ini /code/uwsgi.ini"
