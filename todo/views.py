@@ -202,16 +202,16 @@ def signin(request):
 def signup(request):
     if request.user.is_authenticated:
         return redirect('/')
+
+    else:
+        form = UserForm()
+        return render(request, 'todo/login.html', {'form': form})
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
             new_user = User.objects.create_user(**form.cleaned_data)
             login(request, new_user)
             return redirect('/')
-    else:
-        form = UserForm()
-        return render(request, 'todo/login.html', {'form': form})
-
 def test(request):
     todo_all = TodoTb.objects.filter(author_id=request.user.id).order_by('-type', 'finish_date', '-create_date')
     return render(request,"todo/test.html",{'todo_list':todo_all})
