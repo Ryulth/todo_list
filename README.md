@@ -82,7 +82,7 @@ server {
 sudo ln -s /etc/nginx/sites-available/todo /etc/nginx/sites-enabled/
 sudo /etc/init.d/nginx restart
 ```
-### Dcoker 구동
+### Docker 구동
 ```bash
 docker-compose -f docker-compose-todo.yml up -d
 ```
